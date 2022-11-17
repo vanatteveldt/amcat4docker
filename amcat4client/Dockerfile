@@ -6,22 +6,17 @@ RUN apt update && \
     apt install -y \
     git \
     npm \
-    nodejs \
-    nginx
+    nodejs
 
-WORKDIR /srv
-
-# install amcat4 (the server)
-ENV amcat4_elastic_host 'elastic7:9200'
+# install amcat4client (the web client)
 RUN git clone https://github.com/ccs-amsterdam/amcat4client /srv/amcat4client && \
-    cd amcat4client && \
+    cd /srv/amcat4client && \
     npm install && \
+    npx update-browserslist-db@latest  && \
     npm run build
-
-COPY amcat.conf /etc/nginx/sites-available/amcat.conf
-
-RUN ln -s /etc/nginx/sites-available/amcat.conf /etc/nginx/sites-enabled/amcat.conf 
 
 EXPOSE 5000
 
-CMD ["nginx", "-g", "daemon off;"]
+WORKDIR /srv/amcat4client
+
+CMD ["npm", "start"]

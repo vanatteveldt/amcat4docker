@@ -1,16 +1,25 @@
 version: "3.8"
 services:
-  web_client:
-    build: ./amcat4client
-    container_name: amcat4cient
-    # restart: unless-stopped
+  frontend:
+    image: ccs-amsterdam/amcatfrontend:0.0.1
+    build: ./amcatfrontend
     networks:
       - amcat-net
     ports:
       - 80:5000 # [local port]:[container port]
+  # certbot: # provides https certificates
+  #   image: certbot/certbot
+  web_client:
+    image: ccs-amsterdam/amcat4client:0.0.1
+    build: ./amcat4client
+    container_name: amcat4client
+    # restart: unless-stopped
+    networks:
+      - amcat-net 
     depends_on:
       - "api"
   api:
+    image: ccs-amsterdam/amcat4:0.0.1
     build: ./amcat4
     container_name: amcat4
     # restart: unless-stopped

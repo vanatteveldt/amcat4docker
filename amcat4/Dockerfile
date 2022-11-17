@@ -19,8 +19,10 @@ RUN chmod +x wait-for-it.sh
 ENV amcat4_elastic_host "elastic7:9200"
 
 RUN git clone https://github.com/ccs-amsterdam/amcat4 /srv/amcat && \
-    python3 -m venv amcat/env && \
     cd amcat && \
+    git pull origin 789eea763881cf81a4ebb5f123df56ac77347846 && \
+    git checkout FETCH_HEAD && \
+    python3 -m venv env && \
     env/bin/pip install -e .[dev]
 
 # make alias to run it as amcat4 instaed of /srv/amcat/env/bin/python -m amcat4
