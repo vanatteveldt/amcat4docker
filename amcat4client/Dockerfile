@@ -19,7 +19,7 @@ RUN git clone https://github.com/ccs-amsterdam/amcat4client /srv/amcat4client &&
     npm run build
 
 COPY amcat.conf /etc/nginx/sites-available/amcat.conf
-COPY 500.html 500.jpeg /srv/amcat4client/build/
+COPY 500.html /srv/amcat4client/build/
 
 RUN ln -s /etc/nginx/sites-available/amcat.conf /etc/nginx/sites-enabled/amcat.conf 
 
